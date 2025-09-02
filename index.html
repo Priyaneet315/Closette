@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Closette</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">Closette</div>
+    <nav>
+      <button id="openMeasurements">Add Measurements</button>
+      <button id="profileBtn">Profile</button>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="search-section">
+      <h1>Closette — Tailored to your measurements</h1>
+      <p>Enter your measurements once and get outfits that actually fit.</p>
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search styles, tags, designers">
+        <button id="findFitsBtn">Find fits</button>
+      </div>
+
+      <div class="tags" id="tagsContainer">
+        <!-- Tags will be added by JS -->
+      </div>
+
+      <div class="wardrobe" id="wardrobeContainer">
+        <!-- Wardrobe items will be added by JS -->
+      </div>
+    </section>
+
+    <section class="outfits">
+      <h2>Curated Outfits</h2>
+      <div id="outfitsContainer">No outfits yet — add measurements or select tags.</div>
+    </section>
+  </main>
+
+  <!-- Measurements Modal -->
+  <div class="modal" id="measurementsModal">
+    <div class="modal-content">
+      <h3>Add your measurements</h3>
+      <label>Height (cm) <input type="number" id="height"></label>
+      <label>Bust (cm) <input type="number" id="bust"></label>
+      <label>Waist (cm) <input type="number" id="waist"></label>
+      <label>Hips (cm) <input type="number" id="hips"></label>
+      <div class="modal-actions">
+        <button id="closeModal">Cancel</button>
+        <button id="saveMeasurements">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
