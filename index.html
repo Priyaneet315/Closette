@@ -1,60 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Closette</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closette - Your Perfect Fit Wardrobe</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <div class="logo">Closette</div>
-    <nav>
-      <button id="openMeasurements">Add Measurements</button>
-      <button id="profileBtn">Profile</button>
-    </nav>
-  </header>
 
-  <main class="main">
-    <section class="search-section">
-      <h1>Closette — Tailored to your measurements</h1>
-      <p>Enter your measurements once and get outfits that actually fit.</p>
+    <header class="header">
+        <div class="logo">CLOSETTE</div>
+        <nav>
+            <button id="profileBtn">Profile</button>
+            <button id="openCartBtn">Cart (0)</button>
+        </nav>
+    </header>
 
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search styles, tags, designers">
-        <button id="findFitsBtn">Find fits</button>
-      </div>
+    <main class="main">
+        
+        <section id="productBrowsingSection">
+            <div class="search-section">
+                <h1>Find Your Next Perfect Outfit.</h1>
+                
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search for tops, dresses, workwear...">
+                    <button id="findFitsBtn">Search</button>
+                </div>
+                
+                <div class="tags" id="tagsContainer">
+                    </div>
+            </div>
 
-      <div class="tags" id="tagsContainer">
-        <!-- Tags will be added by JS -->
-      </div>
+            <h2 style="margin-top: 2rem;">Curated Outfits for You</h2>
+            <div class="wardrobe-grid" id="outfitsContainer">
+                </div>
 
-      <div class="wardrobe" id="wardrobeContainer">
-        <!-- Wardrobe items will be added by JS -->
-      </div>
-    </section>
+            <hr style="margin: 2rem 0;">
 
-    <section class="outfits">
-      <h2>Curated Outfits</h2>
-      <div id="outfitsContainer">No outfits yet — add measurements or select tags.</div>
-    </section>
-  </main>
+            <div class="product-filters">
+                <div class="sort-controls">
+                    <label for="priceSort">Sort By:</label>
+                    <select id="priceSort">
+                        <option value="none">Recommended</option>
+                        <option value="low_to_high">Price: Low to High</option>
+                        <option value="high_to_low">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
 
-  <!-- Measurements Modal -->
-  <div class="modal" id="measurementsModal">
-    <div class="modal-content">
-      <h3>Add your measurements</h3>
-      <label>Height (cm) <input type="number" id="height"></label>
-      <label>Bust (cm) <input type="number" id="bust"></label>
-      <label>Waist (cm) <input type="number" id="waist"></label>
-      <label>Hips (cm) <input type="number" id="hips"></label>
-      <div class="modal-actions">
-        <button id="closeModal">Cancel</button>
-        <button id="saveMeasurements">Save</button>
-      </div>
+            <div class="product-grid" id="productGridContainer">
+                </div>
+        </section>
+
+        <section id="checkoutSection">
+            </section>
+
+        </main>
+
+    <div id="measurementsModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 10px;">Set Your Perfect Fit</h2>
+            <p style="margin-bottom: 20px; color: #555;">Save your sizes once to enable personalized filtering and outfit suggestions.</p>
+            
+            <div class="size-group-container">
+                <div>
+                    <div class="size-group-title">Tops & Dresses Size</div>
+                    <select id="topsLetterSize">
+                        <option value="">Letter Size</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="size-group-title">Corresponding Range (Bust/Chest)</div>
+                    <select id="topsRangeSize">
+                        <option value="">Range (in)</option>
+                        <option value="26-28">26 - 28 in</option>
+                        <option value="29-31">29 - 31 in</option>
+                        <option value="32-34">32 - 34 in</option>
+                        <option value="35-37">35 - 37 in</option>
+                        <option value="38+">38+ in</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="size-group-container">
+                <div>
+                    <div class="size-group-title">Bottoms Size (Letter)</div>
+                    <select id="bottomsLetterSize">
+                        <option value="">Letter Size</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="size-group-title">Corresponding Range (Waist)</div>
+                    <select id="bottomsRangeSize">
+                        <option value="">Range (in)</option>
+                        <option value="24-25">24 - 25 in</option>
+                        <option value="26-27">26 - 27 in</option>
+                        <option value="28-29">28 - 29 in</option>
+                        <option value="30-32">30 - 32 in</option>
+                        <option value="33-35">33 - 35 in</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="viewSizeChartBtn" class="secondary-btn-light">View Detailed Size Chart</button>
+            
+            <div id="sizeChartContainer" class="size-chart-container">
+                <h4>Closette Apparel Size Chart</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Size</th>
+                            <th>Bust (in)</th>
+                            <th>Waist (in)</th>
+                            <th>Hips (in)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>XS</td><td>30-32</td><td>24-25</td><td>34-35</td></tr>
+                        <tr><td>S</td><td>33-35</td><td>26-27</td><td>36-37</td></tr>
+                        <tr><td>M</td><td>36-38</td><td>28-29</td><td>38-39</td></tr>
+                        <tr><td>L</td><td>39-41</td><td>30-32</td><td>40-42</td></tr>
+                        <tr><td>XL</td><td>42-44</td><td>33-35</td><td>43-45</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.8em; margin-top: 10px; color: #777;">Numeric sizes (26, 28, etc.) typically correspond to waist size in inches.</p>
+            </div>
+            
+            <div class="modal-actions">
+                <button id="closeSizeChartBtn" class="secondary-btn-light" style="display: none;">Back to Size Selection</button>
+                <button id="closeModal" class="secondary-btn">Cancel</button>
+                <button id="saveMeasurements" class="primary-btn">Save My Fit</button>
+            </div>
+
+        </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="closeCartModal">&times;</button>
+            <h2>Shopping Cart</h2>
+            <div id="cartItemsContainer" style="min-height: 100px; padding: 10px 0;">
+                </div>
+            <div class="modal-actions" style="justify-content: flex-end;">
+                <button id="checkoutBtn" class="primary-btn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="productDetailModal" class="modal">
+        <div class="modal-content large-modal">
+            <button class="modal-close-btn" id="closeProductDetailModal">&times;</button>
+            
+            <div class="product-detail-layout" id="productDetailContent">
+                </div>
+
+            <div class="suggested-products-modal-wrapper" id="modalSuggestedSection">
+                </div>
+
+            <div class="reviews-section">
+                <h3>Customer Reviews (<span id="avgRating">0.0</span>/5 Stars)</h3>
+                <div id="reviewsList">
+                    </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="productViewSizeGuideModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="closeProductViewSizeGuideModal">&times;</button>
+            <h2>Closette Size Guide</h2>
+
+            <table class="size-table">
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>Bust (in)</th>
+                        <th>Waist (in)</th>
+                        <th>Hips (in)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>XS</td><td>30-32</td><td>24-25</td><td>34-35</td></tr>
+                    <tr><td>S</td><td>33-35</td><td>26-27</td><td>36-37</td></tr>
+                    <tr><td>M</td><td>36-38</td><td>28-29</td><td>38-39</td></tr>
+                    <tr><td>L</td><td>39-41</td><td>30-32</td><td>40-42</td></tr>
+                    <tr><td>XL</td><td>42-44</td><td>33-35</td><td>43-45</td></tr>
+                </tbody>
+            </table>
+
+            <div class="measurement-info">
+                <h3>How to Measure:</h3>
+                <p><strong>Bust:</strong> Measure horizontally around the fullest part of your bust.</p>
+                <p><strong>Waist:</strong> Measure around your natural waistline (the narrowest part).</p>
+                <p><strong>Hips:</strong> Measure around the fullest part of your hips.</p>
+                <p class="disclaimer">*Sizing can vary slightly by brand and style. These are general body measurements.</p>
+            </div>
+        </div>
+    </div>
+    <div class="size-chart-overlay" id="productSizeChartOverlay">
+        </div>
+    
+    <div id="toast"></div>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
