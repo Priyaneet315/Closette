@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closette Auth</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f0f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .auth-container {
+        background: #fff;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+        transition: 0.3s;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+        padding: 10px 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        background: #6a5acd;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    button:hover {
+        background: #5941a9;
+    }
+
+    .switch-link {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .switch-link a {
+        color: #6a5acd;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .switch-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Hide Sign Up by default */
+    #signupForm {
+        display: none;
+    }
+</style>
+</head>
+<body>
+<div class="auth-container">
+    <h2 id="formTitle">Login</h2>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" required>
+
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signupForm">
+        <label for="signupName">Full Name</label>
+        <input type="text" id="signupName" placeholder="John Doe" required>
+
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" placeholder="you@example.com" required>
+
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" placeholder="Enter password" required>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="switch-link">
+        <span id="switchText">Don't have an account? <a id="switchLink">Sign Up</a></span>
+    </div>
+</div>
+
+<script>
+const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signupForm');
+const switchLink = document.getElementById('switchLink');
+const switchText = document.getElementById('switchText');
+const formTitle = document.getElementById('formTitle');
+
+// Toggle between Login and Sign Up
+function toggleForm() {
+    if(loginForm.style.display !== "none") {
+        loginForm.style.display = "none";
+        signupForm.style.display = "flex";
+        formTitle.textContent = "Sign Up";
+        switchText.innerHTML = 'Already have an account? <a id="switchLink">Login</a>';
+    } else {
+        loginForm.style.display = "flex";
+        signupForm.style.display = "none";
+        formTitle.textContent = "Login";
+        switchText.innerHTML = 'Don\'t have an account? <a id="switchLink">Sign Up</a>';
+    }
+    document.getElementById('switchLink').addEventListener('click', toggleForm);
+}
+switchLink.addEventListener('click', toggleForm);
+
+// --- Sign Up ---
+signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value.trim();
+
+    let users = JSON.parse(localStorage.getItem("closetteUsers")) || [];
+
+    if(users.some(u => u.email === email)) {
+        alert("Email already exists!");
+        return;
+    }
+
+    users.push({ name, email, password });
+    localStorage.setItem("closetteUsers", JSON.stringify(users));
+
+    // Automatically switch to login form
+    toggleForm();
+});
+
+// --- Login ---
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
+    let users = JSON.parse(localStorage.getItem("closetteUsers")) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if(user) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", user.name);
+        // ✅ Redirect immediately without alert
+        window.location.href = "index.html";
+    } else {
+        alert("Invalid email or password!");
+    }
+});
+</script>
+</body>
+</html>
